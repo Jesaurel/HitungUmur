@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Hitung Umur</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #f6f7f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .card {
+      background: #ffffff;
+      padding: 32px;
+      width: 340px;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+      animation: cardEnter 0.6s ease;
+    }
+
+    h2 {
+      margin: 0;
+      font-weight: 600;
+      color: #111;
+    }
+
+    .subtitle {
+      margin-top: 6px;
+      font-size: 14px;
+      color: #666;
+    }
+
+    input {
+      margin-top: 24px;
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 14px;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+      outline: none;
+      transition: 0.25s;
+    }
+
+    input:focus {
+      border-color: #111;
+    }
+
+    button {
+      margin-top: 16px;
+      width: 100%;
+      padding: 12px;
+      border-radius: 14px;
+      border: none;
+      background: #111;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    button:active {
+      transform: scale(0.96);
+    }
+
+    #hasil {
+      margin-top: 24px;
+      font-size: 18px;
+      font-weight: 500;
+      color: #111;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: 0.4s ease;
+    }
+
+    #hasil.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes cardEnter {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>Hitung Umur</h2>
+    <div class="subtitle">Masukkan tanggal lahir kamu</div>
+
+    <input type="date" id="birthdate">
+    <button onclick="hitungUmur()">Hitung</button>
+
+    <div id="hasil"></div>
+  </div>
+
+  <script>
+    function hitungUmur() {
+      const input = document.getElementById("birthdate").value;
+      const hasil = document.getElementById("hasil");
+
+      if (!input) {
+        hasil.innerText = "Tanggal lahir belum diisi";
+        hasil.classList.add("show");
+        return;
+      }
+
+      const birthDate = new Date(input);
+      const today = new Date();
+
+      let umur = today.getFullYear() - birthDate.getFullYear();
+      const bulan = today.getMonth() - birthDate.getMonth();
+
+      if (bulan < 0 || (bulan === 0 && today.getDate() < birthDate.getDate())) {
+        umur--;
+      }
+
+      animateCount(umur);
+    }
+
+    function animateCount(target) {
+      const hasil = document.getElementById("hasil");
+      let count = 0;
+
+      hasil.classList.remove("show");
+
+      const interval = setInterval(() => {
+        count++;
+        hasil.innerText = `Umur kamu ${count} tahun`;
+
+        if (count >= target) {
+          clearInterval(interval);
+        }
+      }, 20);
+
+      setTimeout(() => {
+        hasil.classList.add("show");
+      }, 50);
+    }
+  </script>
+
+</body>
+</html>
