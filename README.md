@@ -41,10 +41,6 @@ age-calculator-js/
 ├── hitung-umur.html
 └── README.md
 
-📸 Preview
-Demo shown in TikTok video
-🎥 Frontend micro-feature with clean animation
-
 💡 Use Case
 Registration forms
 User profile pages
